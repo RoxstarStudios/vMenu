@@ -85,6 +85,7 @@ namespace vMenu.Client.Functions
             }
         }
 
+
         public async void UpdateOnlinePlayers(UIMenu menu, UIMenuItem item)
         {
             try
@@ -180,11 +181,11 @@ namespace vMenu.Client.Functions
         {
            return (GetGameBuildNumber() >= build);
         }
-        public async void MiscSettingsTask()
+        public async Task MiscSettingsTask()
         {
 
             
-            BaseScript.Delay(0);
+           await BaseScript.Delay(0);
             return;
         }
         public void InitializeAllMenus()
@@ -195,6 +196,7 @@ namespace vMenu.Client.Functions
             _ = new Menus.PlayerSubmenus.WeaponOptionsMenu();
             _ = new Menus.OnlinePlayersSubmenus.OnlinePlayerMenu();
             _ = new Menus.VehicleSubmenus.VehicleSpawnerMenu();
+            _ = new Menus.PlayerSubmenus.SupportOptionsMenu();
 
             // Menus //
             _ = new OnlinePlayersMenu();

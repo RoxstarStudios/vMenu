@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
-
+using static vMenu.Client.Functions.MenuFunctions;
+using vMenu.Shared.Enums;
 using ScaleformUI;
 using ScaleformUI.Elements;
 using ScaleformUI.Menu;
@@ -39,8 +40,31 @@ namespace vMenu.Client.Menus
             UIMenuItem NoClip = new vMenuItem(MenuLanguage.Items["NoClipItem"], "NoClip Toggle", "Toggle to fly around in NoClip mode.").Create();
             NoClip.LabelFont = new ItemFont(Main.CustomFontName, Main.CustomFontId);
 
+            UIMenuItem SupportOptions = new UIMenuItem(MenuLanguage.Items["SupportOptionsItem"].Name ?? "Support Options", MenuLanguage.Items["SupportOptionsItem"].Description ?? "Support related options.", MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor);
+            SupportOptions.LabelFont = new ItemFont(Main.CustomFontName, Main.CustomFontId);
+            SupportOptions.SetRightLabel(">>>");
+            
             playerRelatedOptions.AddItem(NoClip);
+            playerRelatedOptions.AddItem(SupportOptions);
             playerRelatedOptions.AddItem(WeaponOptionsButton);
+
+            if (vMenu.Client.Settings.MenuSettings.LockMenuOnDeath == true && (vMenu.Client.Main.Instance.isPlayerDead))
+            {
+                NoClip.Enabled = false;
+                NoClip.SetRightBadge(BadgeIcon.LOCK);
+                NoClip.SetRightLabel("");
+
+                WeaponOptionsButton.Enabled = false;
+                WeaponOptionsButton.SetRightBadge(BadgeIcon.LOCK);
+                WeaponOptionsButton.SetRightLabel("");
+            }
+            if (!IsAllowed(Permission.POUseSupport))
+            {
+                SupportOptions.Enabled = false;
+                SupportOptions.SetRightBadge(BadgeIcon.LOCK);
+                SupportOptions.Description = "Access to support related options have been restricted by the server owner";
+                SupportOptions.SetRightLabel("");
+            }
 
             NoClip.Activated += (sender, i) =>
             {
@@ -56,6 +80,11 @@ namespace vMenu.Client.Menus
             WeaponOptionsButton.Activated += (sender, i) =>
             {
                 sender.SwitchTo(PlayerSubmenus.WeaponOptionsMenu.Menu(), inheritOldMenuParams: true);
+            };
+
+            SupportOptions.Activated += (sender, i) =>
+            {
+                sender.SwitchTo(PlayerSubmenus.SupportOptionsMenu.Menu(), inheritOldMenuParams: true);
             };
 
             Main.Menus.Add(playerRelatedOptions);
