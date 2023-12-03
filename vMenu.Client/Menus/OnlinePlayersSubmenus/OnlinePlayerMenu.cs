@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 
 using FxEvents;
 
+using static vMenu.Client.Functions.MenuFunctions;
+using vMenu.Shared.Enums;
+
 using ScaleformUI;
 using ScaleformUI.Elements;
 using ScaleformUI.Menu;
@@ -65,10 +68,12 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
 
                 foreach ( var perm in Permissions)
                 {
-                    UIMenuCheckboxItem permbox = new UIMenuCheckboxItem($"{GetAceName(perm.Key)}", UIMenuCheckboxStyle.Tick, perm.Value, "", MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor)
+                    UIMenuCheckboxItem permbox = new UIMenuCheckboxItem($"{GetAceName(perm.Key)}", UIMenuCheckboxStyle.Tick, perm.Value, GetAceName(perm.Key), MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor)
                     {
                         ItemData = perm.Key
                     };
+                    permbox.Label = GetAceName(perm.Key);
+                    permbox.Enabled = IsAllowed(perm.Key);
                     permsmenu.AddItem(permbox);
                 }
 
@@ -78,7 +83,8 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
                     {
                         Notify.Success("Updating Permissions.");
                         BaseScript.TriggerServerEvent("vMenu:UpdatePerms", player.Player.ServerId, JsonConvert.SerializeObject(Permissions));
-                        PlayerPermissions.Label = "Update Permissions";
+                        UpdatePermissions.Label = "Update Permissions";
+                        UpdatePermissions.SetRightLabel("");
                         return;
                     }
                   
@@ -102,7 +108,7 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
                 };
                 
                 await sender.SwitchTo(permsmenu, inheritOldMenuParams: true);
-                UpdatePermissions.Label = "Player Permissions";
+                PlayerPermissions.Label = "Player Permissions";
             };
 
 
