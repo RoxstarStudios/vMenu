@@ -77,10 +77,11 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
                     if (UpdatePermissions.Label == "~g~~h~Confirm Update Permissions~h~")
                     {
                         Notify.Success("Updating Permissions.");
-                        BaseScript.TriggerServerEvent("vMenu:UpdatePerms",  player.Player.ServerId, JsonConvert.SerializeObject(Permissions));
+                        BaseScript.TriggerServerEvent("vMenu:UpdatePerms", player.Player.ServerId, JsonConvert.SerializeObject(Permissions));
                         PlayerPermissions.Label = "Update Permissions";
                         return;
                     }
+                  
                     UpdatePermissions.Enabled = false;
                     UpdatePermissions.Label = "~r~~h~Confirm Update Permissions~h~";
                     UpdatePermissions.SetRightLabel("~r~3");
