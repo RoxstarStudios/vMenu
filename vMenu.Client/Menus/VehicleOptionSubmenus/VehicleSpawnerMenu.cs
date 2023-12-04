@@ -18,6 +18,8 @@ using ScaleformUI.Menu;
 using static vMenu.Client.Functions.MenuFunctions;
 using vMenu.Shared.Enums;
 
+using static vMenu.Client.Functions.Convar;
+
 using vMenu.Client.Functions;
 using vMenu.Client.Settings;
 
