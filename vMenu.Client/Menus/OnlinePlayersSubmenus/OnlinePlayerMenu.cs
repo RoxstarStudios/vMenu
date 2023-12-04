@@ -82,7 +82,10 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
                     if (UpdatePermissions.Label == "~g~~h~Confirm Update Permissions~h~")
                     {
                         Notify.Success("Updating Permissions.");
-                        BaseScript.TriggerServerEvent("vMenu:UpdatePerms", player.Player.ServerId, JsonConvert.SerializeObject(Permissions));
+                        if (IsAllowed(Permission.ChangePermission))
+                        {
+                            BaseScript.TriggerServerEvent("vMenu:UpdatePerms", player.Player.ServerId, JsonConvert.SerializeObject(Permissions));
+                        }
                         UpdatePermissions.Label = "Update Permissions";
                         UpdatePermissions.SetRightLabel("");
                         return;
@@ -115,7 +118,10 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
 
             onlinePlayerMenu.AddWindow(playerDetails);
             onlinePlayerMenu.AddItem(spectatePlayer);
-            onlinePlayerMenu.AddItem(PlayerPermissions);
+            if (IsAllowed(Permission.ChangePermission))
+            {
+                onlinePlayerMenu.AddItem(PlayerPermissions);
+            }
 
             return onlinePlayerMenu;
         }

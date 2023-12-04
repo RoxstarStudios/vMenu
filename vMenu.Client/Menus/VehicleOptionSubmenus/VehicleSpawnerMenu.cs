@@ -243,7 +243,7 @@ namespace vMenu.Client.Menus.VehicleSubmenus
                     {
                         ItemData = veh.Key
                     };   
-                    if (Convar.GetSettingsBool("vmenu_see_vehicle_spawncode"))
+                    if (Convar.GetSettingsBool("vmenu_see_vehicle_spawncode", true))
                     {
                         carBtn.SetRightLabel($"({veh.Key})");
                     } 
@@ -286,10 +286,12 @@ namespace vMenu.Client.Menus.VehicleSubmenus
                 }
                 else
                 {
-                    categoryBtn.Description = "There are no addon cars available in this category.";
-                    categoryBtn.Enabled = false;
-                    categoryBtn.SetRightLabel("");
-
+                    if (GetSettingsBool("vmenu_show_enable_vehicle_category", true))
+                    {
+                        categoryBtn.Description = "There are no addon cars available in this category.";
+                        categoryBtn.Enabled = false;
+                        categoryBtn.SetRightLabel("");
+                    }
                 }
             }
 
