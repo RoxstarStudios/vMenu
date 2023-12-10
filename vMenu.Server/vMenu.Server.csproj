@@ -15,6 +15,7 @@
     <None Remove="ResourceFiles\languages\es.json" />
     <None Remove="ResourceFiles\languages\fr.json" />
     <None Remove="ResourceFiles\languages\mi.json" />
+    <None Remove="ResourceFiles\Plugins\ExampleMenu\plugin.ini" />
     <None Remove="ResourceFiles\stream\Fonts\Quicksand-SemiBold.gfx" />
     <None Remove="ResourceFiles\stream\Fonts\Quicksand.gfx" />
     <None Remove="ResourceFiles\stream\ScaleformUI\LobbyMenu.gfx" />
@@ -25,6 +26,7 @@
     <None Remove="ResourceFiles\stream\ScaleformUI\scaleformui.gfx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\vMenu.Plugins.Server\vMenu.Plugins.Server.csproj" />
     <ProjectReference Include="..\vMenu.Shared\vMenu.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +46,23 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ResourceFiles\languages\mi.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="ResourceFiles\Plugins\**\Server\Plugin.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="ResourceFiles\Plugins\ExampleMenu\Client\Plugin.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ResourceFiles\Plugins\ExampleMenu\plugin.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="ResourceFiles\Plugins\**\Client\Plugin.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Remove="ResourceFiles\Plugins\ExampleMenu\Client\Plugin.cs" />
+    <EmbeddedResource Remove="ResourceFiles\Plugins\ExampleMenu\Server\Plugin.cs" />
+    <Content Include="ResourceFiles\Plugins\ExampleMenu\Server\Plugin.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ResourceFiles\stream\Fonts\Quicksand.gfx">
@@ -95,10 +114,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CitizenFX.Core.Server" Version="1.0.7080" />
-    <PackageReference Include="FxEvents.Server" Version="2.5.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="CitizenFX.Core.Server" Version="1.0.7139" />
+    <PackageReference Include="FxEvents.Server" Version="2.5.4" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -106,13 +126,31 @@
     </Reference>
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(SolutionDir)Build\Server\netstandard2.0\" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-xcopy /E /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\" "$(SolutionDir)Build\[Resource]\vMenu"
-del "$(SolutionDir)Build\[Resource]\vMenu\Server\CitizenFX.*.*"
-del "$(SolutionDir)Build\[Resource]\vMenu\Server\System.*.*"
-del "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.*.*"
-del "$(SolutionDir)Build\[Resource]\vMenu\Server\MsgPack.dll"
-RD /S /Q "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\"</PostBuildEvent>
+    <PostBuildEvent>
+      xcopy /E /Y "$(SolutionDir)Build\Server\netstandard2.0\" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+      xcopy /E /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\" "$(SolutionDir)Build\[Resource]\vMenu"
+      del "$(SolutionDir)Build\[Resource]\vMenu\Server\CitizenFX.*.*"
+
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Memory.dll" "$(SolutionDir)Build\[Resource]\vMenu"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Runtime.Loader.dll" "$(SolutionDir)Build\[Resource]\vMenu"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Threading.Tasks.Extensions.dll" "$(SolutionDir)Build\[Resource]\vMenu"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Runtime.CompilerServices.Unsafe.dll" "$(SolutionDir)Build\[Resource]\vMenu"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Collections.Immutable.dll" "$(SolutionDir)Build\[Resource]\vMenu"
+      del "$(SolutionDir)Build\[Resource]\vMenu\Server\System.*.*"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Memory.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Runtime.Loader.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Threading.Tasks.Extensions.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Runtime.CompilerServices.Unsafe.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Collections.Immutable.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.CodeAnalysis.CSharp.dll" "$(SolutionDir)Build\[Resource]\vMenu"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.CodeAnalysis.dll" "$(SolutionDir)Build\[Resource]\vMenu"
+      del "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.*.*"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Microsoft.CodeAnalysis.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Microsoft.CodeAnalysis.CSharp.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
+
+      del "$(SolutionDir)Build\[Resource]\vMenu\Server\MsgPack.dll"
+      RD /S /Q "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\"</PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 </Project>

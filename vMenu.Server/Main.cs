@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +38,7 @@ namespace vMenu.Server
             string player = targetPlayer.ToString();
 
             string license = API.GetPlayerIdentifierByType(player, "license");
+
             if (Main.UpdatedPerms.TryGetValue(license, out var _))
             {
                 UpdatedPerms[license] = permissions;
@@ -47,12 +48,15 @@ namespace vMenu.Server
                 UpdatedPerms.Add(license, permissions);
             }
 
+            Players[""].TriggerEvent("");
+
             foreach (var user in Players)
             {
                 var val = user.Handle == targetPlayer.ToString();
+
                 if (val)
                 {
-                    TriggerClientEvent(user, "vMenu:RestartMenu");
+                    user.TriggerEvent("vMenu:RestartMenu");
                 }
             }
         }       

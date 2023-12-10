@@ -13,6 +13,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\vMenu.Plugins.Client\vMenu.Plugins.Client.csproj" />
     <ProjectReference Include="..\vMenu.Shared\vMenu.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -30,7 +31,7 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /E /Y "$(SolutionDir)Build\Client\net452\" "$(SolutionDir)Build\[Resource]\vMenu\Client"
 del "$(SolutionDir)Build\[Resource]\vMenu\Client\CitizenFX.*.*"
-del "$(SolutionDir)Build\[Resource]\vMenu\Client\System.*.*"
+
 del "$(SolutionDir)Build\[Resource]\vMenu\Client\Microsoft.*.*"
 del "$(SolutionDir)Build\[Resource]\vMenu\Client\MsgPack.dll"</PostBuildEvent>
   </PropertyGroup>
