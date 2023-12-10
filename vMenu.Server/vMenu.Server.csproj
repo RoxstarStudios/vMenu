@@ -116,9 +116,6 @@
   <ItemGroup>
     <PackageReference Include="CitizenFX.Core.Server" Version="1.0.7139" />
     <PackageReference Include="FxEvents.Server" Version="2.5.4" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
-    <PackageReference Include="System.Collections.Immutable" Version="8.0.0" />
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -131,23 +128,9 @@
       xcopy /E /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\" "$(SolutionDir)Build\[Resource]\vMenu"
       del "$(SolutionDir)Build\[Resource]\vMenu\Server\CitizenFX.*.*"
 
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Memory.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Runtime.Loader.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Threading.Tasks.Extensions.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Runtime.CompilerServices.Unsafe.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Collections.Immutable.dll" "$(SolutionDir)Build\[Resource]\vMenu"
       del "$(SolutionDir)Build\[Resource]\vMenu\Server\System.*.*"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Memory.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Runtime.Loader.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Threading.Tasks.Extensions.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Runtime.CompilerServices.Unsafe.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Collections.Immutable.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
 
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.CodeAnalysis.CSharp.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.CodeAnalysis.dll" "$(SolutionDir)Build\[Resource]\vMenu"
       del "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.*.*"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Microsoft.CodeAnalysis.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Microsoft.CodeAnalysis.CSharp.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
 
       del "$(SolutionDir)Build\[Resource]\vMenu\Server\MsgPack.dll"
       RD /S /Q "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\"</PostBuildEvent>

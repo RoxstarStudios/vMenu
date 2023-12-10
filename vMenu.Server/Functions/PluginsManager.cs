@@ -8,10 +8,6 @@ using static CitizenFX.Core.Native.API;
 
 using CitizenFX.Core;
 
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Emit;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
 using System.Threading;
 
@@ -19,7 +15,6 @@ namespace vMenu.Server.Functions
 {
     public class PluginsManager : BaseScript
     {
-        public PortableExecutableReference[] References { get; set; }
         public PluginsManager()
         {
             Debug.WriteLine("Initializing Plugins");
@@ -80,29 +75,7 @@ namespace vMenu.Server.Functions
 
             Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 1");
 
-            SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(PluginServerFileContent, new CSharpParseOptions(LanguageVersion.CSharp8));
-
-            Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 2");
-
-            CompilationUnitSyntax root = syntaxTree.GetCompilationUnitRoot();
-
-            Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 3");
-
-            var compilation = CSharpCompilation.Create("vMenu.Plugins.Server.Plugin", [syntaxTree])
-                .AddReferences(MetadataReference.CreateFromFile(typeof(string).Assembly.Location))
-                .AddSyntaxTrees(syntaxTree);
-
-            Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 4");
-
-            SemanticModel model = compilation.GetSemanticModel(syntaxTree);
-
-            Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 5");
-
-            UsingDirectiveSyntax usingSystem = root.Usings[0];
-
-            Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 6");
-
-            NameSyntax systemName = usingSystem.Name;
+            // Initialize Plugins Here
 
             Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 7 - Finish");
         }
