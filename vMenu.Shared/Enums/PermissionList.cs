@@ -13,6 +13,7 @@ namespace vMenu.Shared.Enums
         Staff,
         Open,
         NoClip,
+        ChangePermission,
         #endregion
 
         #region Player Options

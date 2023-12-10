@@ -11,6 +11,9 @@ using Newtonsoft.Json;
 
 using FxEvents;
 
+using static vMenu.Client.Functions.MenuFunctions;
+using vMenu.Shared.Enums;
+
 using ScaleformUI;
 using ScaleformUI.Elements;
 using ScaleformUI.Menu;
@@ -27,7 +30,7 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
         private static UIMenu onlinePlayerMenu = null;
 
         public static Menu MenuLanguage = Languages.Menus["OnlinePlayerMenu"];
-
+        private static Dictionary<vMenu.Shared.Enums.Permission, bool> Permissions = new();
         public OnlinePlayerMenu()
         {
             onlinePlayerMenu = new Objects.vMenu(MenuLanguage.Subtitle ?? "Online Player").Create();
@@ -57,21 +60,54 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
                 PlayerPermissions.Label = "Loading Player Permissions";
                 var permsmenu = new Objects.vMenu("Player Permissions").Create();
                 string permissions = await EventDispatcher.Get<string>("RequestPermissions", player.Player.ServerId);
-                Debug.WriteLine(permissions);
+
+                UIMenuItem UpdatePermissions = new UIMenuItem("Update Permissions","Click this to send the permission updates to the server and user", MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor);
+                permsmenu.AddItem(UpdatePermissions);
+
                 var Permissions = JsonConvert.DeserializeObject<Dictionary<vMenu.Shared.Enums.Permission, bool>>(permissions);
+
                 foreach ( var perm in Permissions)
                 {
-                    UIMenuCheckboxItem permbox = new UIMenuCheckboxItem($"{GetAceName(perm.Key)}", UIMenuCheckboxStyle.Tick, perm.Value, "", MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor)
+                    UIMenuCheckboxItem permbox = new UIMenuCheckboxItem($"{GetAceName(perm.Key)}", UIMenuCheckboxStyle.Tick, perm.Value, GetAceName(perm.Key), MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor)
                     {
                         ItemData = perm.Key
                     };
+                    permbox.Label = GetAceName(perm.Key);
+                    permbox.Enabled = IsAllowed(perm.Key);
                     permsmenu.AddItem(permbox);
                 }
+
+                UpdatePermissions.Activated += async (sender, i) =>
+                {
+                    if (UpdatePermissions.Label == "~g~~h~Confirm Update Permissions~h~")
+                    {
+                        Notify.Success("Updating Permissions.");
+                        if (IsAllowed(Permission.ChangePermission))
+                        {
+                            BaseScript.TriggerServerEvent("vMenu:UpdatePerms", player.Player.ServerId, JsonConvert.SerializeObject(Permissions));
+                        }
+                        UpdatePermissions.Label = "Update Permissions";
+                        UpdatePermissions.SetRightLabel("");
+                        return;
+                    }
+                  
+                    UpdatePermissions.Enabled = false;
+                    UpdatePermissions.Label = "~r~~h~Confirm Update Permissions~h~";
+                    UpdatePermissions.SetRightLabel("~r~3");
+                    await BaseScript.Delay(1000);
+                    UpdatePermissions.SetRightLabel("~r~2");
+                    await BaseScript.Delay(1000);
+                    UpdatePermissions.SetRightLabel("~r~1");
+                    await BaseScript.Delay(1000);
+                    UpdatePermissions.SetRightLabel("~g~Unlocked");
+                    UpdatePermissions.Label = "~g~~h~Confirm Update Permissions~h~";
+                    UpdatePermissions.Enabled = true;
+                };
 
                 permsmenu.OnCheckboxChange += (_sender, _item, _checked) => 
                 {
                     Permissions[_item.ItemData] = _checked;
-                    BaseScript.TriggerServerEvent("vMenu:UpdatePerms",  player.Player.ServerId, JsonConvert.SerializeObject(Permissions));
+
                 };
                 
                 await sender.SwitchTo(permsmenu, inheritOldMenuParams: true);
@@ -82,7 +118,10 @@ namespace vMenu.Client.Menus.OnlinePlayersSubmenus
 
             onlinePlayerMenu.AddWindow(playerDetails);
             onlinePlayerMenu.AddItem(spectatePlayer);
-            onlinePlayerMenu.AddItem(PlayerPermissions);
+            if (IsAllowed(Permission.ChangePermission))
+            {
+                onlinePlayerMenu.AddItem(PlayerPermissions);
+            }
 
             return onlinePlayerMenu;
         }

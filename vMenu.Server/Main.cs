@@ -47,18 +47,7 @@ namespace vMenu.Server
             {
                 UpdatedPerms.Add(license, permissions);
             }
-
-            Players[""].TriggerEvent("");
-
-            foreach (var user in Players)
-            {
-                var val = user.Handle == targetPlayer.ToString();
-
-                if (val)
-                {
-                    user.TriggerEvent("vMenu:RestartMenu");
-                }
-            }
+            Players[targetPlayer].TriggerEvent("vMenu:RestartMenu");
         }       
     }
 }
