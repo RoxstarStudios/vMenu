@@ -18,6 +18,8 @@ using ScaleformUI.Menu;
 using static vMenu.Client.Functions.MenuFunctions;
 using vMenu.Shared.Enums;
 
+using static vMenu.Client.Functions.Convar;
+
 using vMenu.Client.Functions;
 using vMenu.Client.Settings;
 
@@ -31,7 +33,7 @@ namespace vMenu.Client.Menus.VehicleSubmenus
 
         public VehicleSpawnerMenu()
         {
-            var MenuLanguage = Languages.Menus["VehicleSpawnMenu"];
+           // var MenuLanguage = Languages.Menus["VehicleSpawnMenu"];
 
             VehicleSpawnMenu = new Objects.vMenu("Vehicle Spawner").Create();
 
@@ -121,7 +123,7 @@ namespace vMenu.Client.Menus.VehicleSubmenus
                 5.88f,
                 21.0700016f,
                 0.33f,
-                14.0f,
+                0.33f,
                 6.86f,
                 0.32f,
                 0.2f,
@@ -243,7 +245,7 @@ namespace vMenu.Client.Menus.VehicleSubmenus
                     {
                         ItemData = veh.Key
                     };   
-                    if (Convar.GetSettingsBool("vmenu_see_vehicle_spawncode"))
+                    if (Convar.GetSettingsBool("vmenu_see_vehicle_spawncode", true))
                     {
                         carBtn.SetRightLabel($"({veh.Key})");
                     } 
@@ -286,10 +288,12 @@ namespace vMenu.Client.Menus.VehicleSubmenus
                 }
                 else
                 {
-                    categoryBtn.Description = "There are no addon cars available in this category.";
-                    categoryBtn.Enabled = false;
-                    categoryBtn.SetRightLabel("");
-
+                    if (GetSettingsBool("vmenu_show_enable_vehicle_category", true))
+                    {
+                        categoryBtn.Description = "There are no addon cars available in this category.";
+                        categoryBtn.Enabled = false;
+                        categoryBtn.SetRightLabel("");
+                    }
                 }
             }
 

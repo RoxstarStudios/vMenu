@@ -19,9 +19,9 @@ namespace vMenu.Server.Functions
         /// </summary>
         /// <param name="setting"></param>
         /// <returns></returns>
-        public static bool GetSettingsBool(string setting)
+        public static bool GetSettingsBool(string setting, bool defaultval = false)
         {
-            return GetConvar(setting.ToString(), "false") == "true";
+            return GetConvar(setting.ToString(), defaultval.ToString()) == "true";
         }
 
         /// <summary>
@@ -29,12 +29,12 @@ namespace vMenu.Server.Functions
         /// </summary>
         /// <param name="setting"></param>
         /// <returns></returns>
-        public static int GetSettingsInt(string setting)
+        public static int GetSettingsInt(string setting, int defaultint = -1)
         {
-            var convarInt = GetConvarInt(setting.ToString(), -1);
+            var convarInt = GetConvarInt(setting.ToString(), defaultint);
             if (convarInt == -1)
             {
-                if (int.TryParse(GetConvar(setting.ToString(), "-1"), out var convarIntAlt))
+                if (int.TryParse(GetConvar(setting.ToString(), defaultint.ToString()), out var convarIntAlt))
                 {
                     return convarIntAlt;
                 }
@@ -47,9 +47,9 @@ namespace vMenu.Server.Functions
         /// </summary>
         /// <param name="setting"></param>
         /// <returns></returns>
-        public static float GetSettingsFloat(string setting)
+        public static float GetSettingsFloat(string setting, float defaultfloat = -1.0f)
         {
-            if (float.TryParse(GetConvar(setting.ToString(), "-1.0"), out var result))
+            if (float.TryParse(GetConvar(setting.ToString(), defaultfloat.ToString()), out var result))
             {
                 return result;
             }
