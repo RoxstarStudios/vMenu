@@ -40,8 +40,8 @@ namespace vMenu.Client.Menus.VehicleSubmenus
             UIMenuItem SpawnByName = new UIMenuItem("Spawn Vehicle By Model Name", "Enter the name of a vehicle to spawn.", MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor);
             SpawnByName.LabelFont = new ItemFont(Main.CustomFontName, Main.CustomFontId);
             SpawnByName.SetRightLabel(">>>");
-
-            UIMenuCheckboxItem replacevehicle = new UIMenuCheckboxItem("Replace Previous Vehicle", UIMenuCheckboxStyle.Tick, true, "This will automatically delete your previously spawned vehicle when you spawn a new vehicle.", MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor);
+            string spawncap = IsAllowed(Permission.VSSpawnCapBypass) ? "" : $" This server has a max spawned vehicle limit of {Convar.GetSettingsInt("vmenu_max_allowed_spawned_vehicles", 5)} spawning more then this will delete the oldest one.";
+            UIMenuCheckboxItem replacevehicle = new UIMenuCheckboxItem("Replace Previous Vehicle", UIMenuCheckboxStyle.Tick, true, "This will automatically delete your previously spawned vehicle when you spawn a new vehicle." + spawncap, MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor);
             UIMenuCheckboxItem spawninside = new UIMenuCheckboxItem("Spawn Inside Vehicle", UIMenuCheckboxStyle.Tick, true, "This will teleport you into the vehicle when you spawn it.", MenuSettings.Colours.Items.BackgroundColor, MenuSettings.Colours.Items.HighlightColor);
 
             SpawnByName.Activated += async (sender, i) =>

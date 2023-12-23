@@ -33,6 +33,7 @@ namespace vMenu.Shared.Enums
         VSDisableReplacePrevious,
         VSSpawnByName,
         VSShowSpawnCode,
+        VSSpawnCapBypass,
         VSAddon,
         VSCompacts,
         VSSedans,
