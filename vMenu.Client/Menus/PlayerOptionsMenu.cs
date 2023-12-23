@@ -84,7 +84,7 @@ namespace vMenu.Client.Menus
 
             SupportOptions.Activated += (sender, i) =>
             {
-                sender.SwitchTo(PlayerSubmenus.SupportOptionsMenu.Menu(), inheritOldMenuParams: true);
+                //sender.SwitchTo(PlayerSubmenus.SupportOptionsMenu.Menu(), inheritOldMenuParams: true);
             };
 
             Main.Menus.Add(playerRelatedOptions);
