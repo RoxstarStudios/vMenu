@@ -25,11 +25,9 @@ using vMenu.Client.Settings;
 
 using vMenu.Shared.Enums;
 using static CitizenFX.Core.Native.API;
-<<<<<<< Updated upstream
 using vMenu.Client.Objects;
-=======
 using System.Diagnostics.Eventing.Reader;
->>>>>>> Stashed changes
+
 
 namespace vMenu.Client.Menus
 {
