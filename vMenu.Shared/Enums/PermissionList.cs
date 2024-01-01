@@ -13,7 +13,6 @@ namespace vMenu.Shared.Enums
         Staff,
         Open,
         NoClip,
-        ChangePermission,
         #endregion
 
         #region Player Options
@@ -70,6 +69,7 @@ namespace vMenu.Shared.Enums
         #region Voice Chat
         VCAll,
         VCMenu,
+        ChangePermission,
         #endregion
     }
 }

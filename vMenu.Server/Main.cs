@@ -16,6 +16,7 @@ using Logger;
 using vMenu.Server.Events;
 using System.Data;
 using vMenu.Shared.Objects;
+using vMenu.Server.Services;
 
 namespace vMenu.Server
 {
@@ -30,8 +31,12 @@ namespace vMenu.Server
             EventDispatcher.Initalize("vMenu:Inbound", "vMenu:Outbound", "vMenu:Signature");
             EventHandlers.Add("vMenu:UpdatePerms", new Action<int, string>(UpdatePerms));
 
-            Debug.WriteLine("vMenu has started.");
+            _ = DiscordService.Instance;
+            _ = LoggingService.Instance;
+
+            LoggingService.Instance.Info("vMenu has started.");
         }
+
          private void UpdatePerms(int targetPlayer, string permissions)
         {
 

@@ -27,12 +27,14 @@ namespace vMenu.Server.Events
         {
             EventDispatcher.Mount("RequestPermissions", new Func<int, Task<string>>(RequestPermissions));
         }
+
         private async Task<string> RequestPermissions(int source)
         {
             var perms = new Dictionary<Permission, bool>();
 
             string playerstring = source.ToString();
             string license = GetPlayerIdentifierByType(playerstring, "license");
+
             if (Main.UpdatedPerms.Count != 0)
             {
                 if (Main.UpdatedPerms.TryGetValue(license, out var playerperms))
@@ -40,11 +42,13 @@ namespace vMenu.Server.Events
                     return playerperms;
                 }
             }
+
             if (!Convar.GetSettingsBool("vmenu_use_permissions"))
             {
                 foreach (var p in Enum.GetValues(typeof(Permission)))
                 {
                     var permission = (Permission)p;
+
                     switch (permission)
                     {
                         // don't allow any of the following permissions if perms are ignored.
@@ -52,6 +56,7 @@ namespace vMenu.Server.Events
                         case Permission.Staff:
                             perms.Add(permission, false);
                             break;
+
                         // do allow the rest
                         default:
                             perms.Add(permission, true);
@@ -64,15 +69,18 @@ namespace vMenu.Server.Events
                 foreach (var p in Enum.GetValues(typeof(Permission)))
                 {
                     var permission = GetAceName((Permission)p);
+
                     if (!perms.ContainsKey((Permission)p))
                     {
                         perms.Add((Permission)p, IsPlayerAceAllowed(playerstring, permission)); // triggers IsAllowedServer
                     }
                 }
             }
+
             await Delay(10);
             return JsonConvert.SerializeObject(perms);;
         }
+
         public static string GetAceName(Permission permission)
         {
             var name = permission.ToString();

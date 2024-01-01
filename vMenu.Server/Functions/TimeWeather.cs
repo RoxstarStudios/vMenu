@@ -60,6 +60,7 @@ namespace vMenu.Server.Functions
             FreezeTime = freezeTimeNew;
             TimeChange = true;
         }
+
         /// <summary>
         /// Loop used for syncing and keeping track of the time in-game.
         /// </summary>
@@ -67,6 +68,7 @@ namespace vMenu.Server.Functions
         private async Task TimeLoop()
         {
             var tempspeed = MinuteClockSpeed;
+
             if (IsServerTimeSynced)
             {
                 var currentTime = DateTime.Now;
@@ -83,6 +85,7 @@ namespace vMenu.Server.Functions
                     tempspeed = 1;
 
                     var nval = ((SetCurrentHours - CurrentHours) * -1);
+
                     if (nval > 0)
                     {
                         nval = (nval + 12) * -1;
@@ -97,6 +100,7 @@ namespace vMenu.Server.Functions
                         if ((CurrentMinutes + 1) > 59)
                         {
                             CurrentMinutes = 0;
+
                             if ((CurrentHours + 1) > 23)
                             {
                                 CurrentHours = 0;
@@ -118,6 +122,7 @@ namespace vMenu.Server.Functions
                             if (CurrentMinutes < 1)
                             {
                                 CurrentMinutes = 59;
+
                                 if (CurrentHours < 1)
                                 {
                                     CurrentHours = 23;
@@ -137,6 +142,7 @@ namespace vMenu.Server.Functions
                             if ((CurrentMinutes + 1) > 59)
                             {
                                 CurrentMinutes = 0;
+
                                 if ((CurrentHours + 1) > 23)
                                 {
                                     CurrentHours = 0;
@@ -152,6 +158,7 @@ namespace vMenu.Server.Functions
                             }
                         }
                     }
+
                     if ((CurrentMinutes >= SetCurrentMinutes) && (CurrentHours == SetCurrentHours))
                     {
                         CurrentHours = SetCurrentHours;
@@ -166,6 +173,7 @@ namespace vMenu.Server.Functions
                         if ((CurrentMinutes + 1) > 59)
                         {
                             CurrentMinutes = 0;
+
                             if ((CurrentHours + 1) > 23)
                             {
                                 CurrentHours = 0;
@@ -181,6 +189,7 @@ namespace vMenu.Server.Functions
                         }
                     }
                 }
+
                 await Delay(tempspeed);
             }
         }        

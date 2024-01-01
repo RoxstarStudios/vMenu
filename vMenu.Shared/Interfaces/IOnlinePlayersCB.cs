@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +10,6 @@ namespace vMenu.Shared.Interfaces
     {
         public string PlayerName = "";
         public int ServerId = 0;
-        public string[] Identifiers;
+        public string[] Identifiers = [];
     }
 }

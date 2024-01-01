@@ -5,6 +5,7 @@
     <AssemblyName>vMenu.Client.net</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <LangVersion>10.0</LangVersion>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>embedded</DebugType>

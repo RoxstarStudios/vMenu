@@ -32,6 +32,7 @@ namespace vMenu.Server.Functions
         public static int GetSettingsInt(string setting, int defaultint = -1)
         {
             var convarInt = GetConvarInt(setting.ToString(), defaultint);
+
             if (convarInt == -1)
             {
                 if (int.TryParse(GetConvar(setting.ToString(), defaultint.ToString()), out var convarIntAlt))
@@ -39,6 +40,7 @@ namespace vMenu.Server.Functions
                     return convarIntAlt;
                 }
             }
+
             return convarInt;
         }
 
@@ -53,6 +55,7 @@ namespace vMenu.Server.Functions
             {
                 return result;
             }
+
             return -1f;
         }
 
@@ -64,10 +67,12 @@ namespace vMenu.Server.Functions
         public static string GetSettingsString(string setting, string defaultValue = null)
         {
             var value = GetConvar(setting.ToString(), defaultValue ?? "");
+
             if (string.IsNullOrEmpty(value))
             {
                 return null;
             }
+
             return value;
         }
     }

@@ -10,6 +10,7 @@ using CitizenFX.Core;
 
 using System.Linq;
 using System.Threading;
+using vMenu.Server.Services;
 
 namespace vMenu.Server.Functions
 {
@@ -17,14 +18,14 @@ namespace vMenu.Server.Functions
     {
         public PluginsManager()
         {
-            Debug.WriteLine("Initializing Plugins");
+            Debug.WriteLine("Initializing Plugins Manager");
 
             string PluginsDirectory = $"{GetResourcePath(GetCurrentResourceName())}/Plugins";
 
             if (!Directory.Exists(PluginsDirectory))
             {
                 Directory.CreateDirectory(PluginsDirectory);
-                Debug.WriteLine("Plugins Folder did not exist. Created one for you!");
+                LoggingService.Instance.Warning("Plugins Folder did not exist. Created one for you!");
             }
 
             var PluginFolders = Directory.EnumerateDirectories(PluginsDirectory);
@@ -35,35 +36,35 @@ namespace vMenu.Server.Functions
 
                 if (!File.Exists($"{PluginFolderLoc}/plugin.ini"))
                 {
-                    Debug.WriteLine($"/Plugins/{PluginFolderName}/ did not have a \"/plugin.ini\" file. Skipping...");
+                    LoggingService.Instance.Warning($"/Plugins/{PluginFolderName}/ did not have a \"/plugin.ini\" file. Skipping...");
                     continue;
                 }
 
                 if (!Directory.Exists($"{PluginFolderLoc}/Client"))
                 {
-                    Debug.WriteLine($"/Plugins/{PluginFolderName}/ did not have a \"/Client\" folder. Skipping...");
+                    LoggingService.Instance.Warning($"/Plugins/{PluginFolderName}/ did not have a \"/Client\" folder. Skipping...");
                     continue;
                 }
 
                 if (!File.Exists($"{PluginFolderLoc}/Client/Plugin.cs"))
                 {
-                    Debug.WriteLine($"/Plugins/{PluginFolderName}/ did not have a \"/Client/Plugin.cs\" file. Skipping...");
+                    LoggingService.Instance.Warning($"/Plugins/{PluginFolderName}/ did not have a \"/Client/Plugin.cs\" file. Skipping...");
                     continue;
                 }
 
                 if (!Directory.Exists($"{PluginFolderLoc}/Server"))
                 {
-                    Debug.WriteLine($"/Plugins/{PluginFolderName}/ did not have a \"/Server\" folder. Skipping...");
+                    LoggingService.Instance.Warning($"/Plugins/{PluginFolderName}/ did not have a \"/Server\" folder. Skipping...");
                     continue;
                 }
 
                 if (!File.Exists($"{PluginFolderLoc}/Server/Plugin.cs"))
                 {
-                    Debug.WriteLine($"/Plugins/{PluginFolderName}/ did not have a \"/Server/Plugin.cs\" file. Skipping...");
+                    LoggingService.Instance.Warning($"/Plugins/{PluginFolderName}/ did not have a \"/Server/Plugin.cs\" file. Skipping...");
                     continue;
                 }
 
-                Debug.WriteLine($"/Plugins/{PluginFolderName}/ has been found! Initializing Plugin...");
+                LoggingService.Instance.Success($"/Plugins/{PluginFolderName}/ has been found! Initializing Plugin...");
 
                 InitializePlugin(PluginFolderName, PluginFolderLoc);
             }
@@ -73,11 +74,11 @@ namespace vMenu.Server.Functions
         {
             string PluginServerFileContent = File.ReadAllText($"{PluginFolderLoc}/Server/Plugin.cs");
 
-            Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 1");
+            LoggingService.Instance.Info($"/Plugins/{PluginFolderName}/ Debug 1");
 
             // Initialize Plugins Here
 
-            Debug.WriteLine($"/Plugins/{PluginFolderName}/ Debug 7 - Finish");
+            LoggingService.Instance.Info($"/Plugins/{PluginFolderName}/ Debug 7 - Finish");
         }
     }
 }
