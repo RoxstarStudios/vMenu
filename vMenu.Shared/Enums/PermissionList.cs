@@ -18,6 +18,7 @@ namespace vMenu.Shared.Enums
         #region Player Options
         POAll,
         POMenu,
+        POUseSupport,
         #endregion
 
         #region Vehicle Options
@@ -31,6 +32,7 @@ namespace vMenu.Shared.Enums
         VSDisableReplacePrevious,
         VSSpawnByName,
         VSShowSpawnCode,
+        VSSpawnCapBypass,
         VSAddon,
         VSCompacts,
         VSSedans,

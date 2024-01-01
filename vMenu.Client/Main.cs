@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 
 using vMenu.Client.Events;
 using vMenu.Client.Functions;
+
 using vMenu.Client.KeyMappings;
 using vMenu.Client.Settings;
 using vMenu.Shared.Enums;
@@ -92,5 +93,39 @@ namespace vMenu.Client
         {
             Tick -= task;
         }
+
+        public bool isPlayerDead = false;
+
+        [Tick]
+        public async Task OnPlayerDeadCheckTick()
+        {
+            if (MenuFunctions.Instance == null)
+            {
+                await Delay(100);
+                return;
+            }
+
+            if (Game.Player.Character.IsDead)
+            {
+                if (!isPlayerDead)
+                {
+                    isPlayerDead = true;
+                    MenuFunctions.Instance.RestartMenu();
+                    
+                }
+            }
+            else
+            {
+                if (isPlayerDead)
+                {
+                    isPlayerDead = false;
+                    MenuFunctions.Instance.RestartMenu();
+                    
+                }
+            }
+
+            await Delay(100);
+        }
+
     }
 }

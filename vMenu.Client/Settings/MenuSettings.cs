@@ -37,12 +37,13 @@ namespace vMenu.Client.Settings
             public bool EnableAnimation;
             public bool ResetCursor;
             public bool LeftClickControl;
+            public bool LockMenuOnDeath;
             public string BannerTitle;
             public string TextureUrl;
             public string TextureDictionary;
             public string TextureName; 
 
-            public MenuSettingJson(int MaxItemsOnScreen, float FadingTime, bool AlternativeTitle, bool Glare, bool Enabled3DAnimations, bool MouseControlsEnabled, bool MouseEdgeEnabled, bool MouseWheelControlEnabled, bool ControlDisablingEnabled, bool EnableAnimation, bool ResetCursor, bool LeftClickControl, string BannerTitle, string TextureUrl, string TextureDictionary, string TextureName)
+            public MenuSettingJson(int MaxItemsOnScreen, float FadingTime, bool AlternativeTitle, bool Glare, bool Enabled3DAnimations, bool MouseControlsEnabled, bool MouseEdgeEnabled, bool MouseWheelControlEnabled, bool ControlDisablingEnabled, bool EnableAnimation, bool ResetCursor, bool LeftClickControl, bool LockMenuOnDeath, string BannerTitle, string TextureUrl, string TextureDictionary, string TextureName)
             {
                 this.MaxItemsOnScreen = MaxItemsOnScreen;
                 this.FadingTime = FadingTime;
@@ -56,6 +57,7 @@ namespace vMenu.Client.Settings
                 this.EnableAnimation = EnableAnimation;
                 this.ResetCursor = ResetCursor;
                 this.LeftClickControl = LeftClickControl;
+                this.LockMenuOnDeath = LockMenuOnDeath;
                 this.BannerTitle = BannerTitle;
                 this.TextureUrl = TextureUrl;
                 this.TextureDictionary = TextureDictionary;
@@ -125,6 +127,7 @@ namespace vMenu.Client.Settings
         public static bool EnableAnimation = JsonSettings.EnableAnimation;
         public static bool ResetCursor = JsonSettings.ResetCursor;
         public static bool LeftClickControl = JsonSettings.LeftClickControl;
+        public static bool LockMenuOnDeath = JsonSettings.LockMenuOnDeath;
         public static MenuBuildingAnimation BuildingAnimation = MenuBuildingAnimation.NONE;
         public static ScrollingType ScrollingType = ScrollingType.CLASSIC;
 

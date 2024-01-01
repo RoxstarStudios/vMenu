@@ -11,6 +11,7 @@
   "EnableAnimation": false,
   "ResetCursor": false,
   "LeftClickControl": true,
+  "LockMenuOnDeath":  false, 
   "BannerTitle": "vMenu ~y~Revamped",
   "TextureUrl": "https://image.com/image.png",
   "TextureDictionary": "vmenu_textures",

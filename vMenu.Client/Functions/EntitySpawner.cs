@@ -22,6 +22,8 @@ using vMenu.Client.Events;
 
 using vMenu.Shared.Enums;
 
+using static vMenu.Client.Functions.Convar;
+
 using static vMenu.Client.Functions.MenuFunctions;
 
 using static CitizenFX.Core.Native.API;
@@ -31,6 +33,7 @@ namespace vMenu.Client.Functions
     public class EntitySpawner
     {
         private static Vehicle _previousVehicle;
+        private static List<Vehicle> VehicleList = new();
         
         public static async Task<int> SpawnVehicle(string vehicleName = "custom", bool spawnInside = false, bool replacePrevious = false)
         {
@@ -125,16 +128,30 @@ namespace vMenu.Client.Functions
                         SetEntityAsMissionEntity(_previousVehicle.Handle, true, true);
                         _previousVehicle.Delete();
                     }
-                    // Otherwise
-                    else
-                    {
-                        if (!true)
-                        {
-                            SetEntityAsMissionEntity(_previousVehicle.Handle, false, false);
-                        }
-                    }
                     _previousVehicle = null;
                 }
+            }
+
+            while (IsAllowed(Permission.VSSpawnCapBypass) ? false : (VehicleList.Count > GetSettingsInt("vmenu_max_allowed_spawned_vehicles", 5)))
+            {
+                var tempvehicle = VehicleList[0];
+                // And it's actually a vehicle (rather than another random entity type)
+                if (tempvehicle.Exists() && tempvehicle.PreviouslyOwnedByPlayer &&
+                    (tempvehicle.Occupants.Count() == 0 || tempvehicle.Driver.Handle == Game.PlayerPed.Handle))
+                {
+                    // If the previous vehicle should be deleted:
+                    if (!replacePrevious || !IsAllowed(Permission.VSDisableReplacePrevious))
+                    {
+                        // Delete it.
+                        tempvehicle.PreviouslyOwnedByPlayer = false;
+                        SetEntityAsMissionEntity(tempvehicle.Handle, true, true);
+                        tempvehicle.Delete();
+                    }
+                    tempvehicle = null;
+                }
+                Notify.Info($"You hit the vehicle spawn cap of {GetSettingsInt("vmenu_max_allowed_spawned_vehicles", 5)}");
+
+                VehicleList.RemoveAt(0);
             }
 
             if (Game.PlayerPed.IsInVehicle() && (replacePrevious || !IsAllowed(Permission.VSDisableReplacePrevious)))
@@ -177,6 +194,13 @@ namespace vMenu.Client.Functions
                 new Ped(Game.PlayerPed.Handle).SetIntoVehicle(vehicle, VehicleSeat.Driver);
 
             }
+
+            if (!replacePrevious)
+            {
+                VehicleList.Add(vehicle);
+            }
+            _previousVehicle = vehicle;
+            Debug.WriteLine($"{VehicleList.Count}");
             SetModelAsNoLongerNeeded(vehicleHash);
             return vehicle.Handle;
         }

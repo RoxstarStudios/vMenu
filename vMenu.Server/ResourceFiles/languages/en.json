@@ -108,6 +108,11 @@
           "Description": "Spawn weapons, refill ammo and more through this menu!"
         },
 
+        "SupportOptionsItem": {
+          "Name": "Support Options",
+          "Description": "Support Related Options"
+        },
+
         "NoClipItem": {
           "Name": "NoClip Toggle",
           "Description": "Toggle to fly around in NoClip mode."
@@ -196,6 +201,21 @@
         "SnipersItem": {
           "Name": "Sniper Rifles",
           "Description": ""
+        }
+      }
+    },
+
+    "SupportMenu": {
+      "Subtitle": "Support Options",
+
+      "Items": {
+        "SMFQ": {
+          "Name": "Support Related FAQ",
+          "Description": "Common questions related to support. Read this before submitting a request!"
+        },
+        "RequestSupportItem": {
+          "Name": "Request Support",
+          "Description": "Request server support from online moderators."
         }
       }
     },

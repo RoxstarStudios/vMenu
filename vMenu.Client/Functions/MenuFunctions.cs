@@ -87,6 +87,7 @@ namespace vMenu.Client.Functions
             }
         }
 
+
         public async void UpdateOnlinePlayers(UIMenu menu, UIMenuItem item)
         {
             try
@@ -155,7 +156,7 @@ namespace vMenu.Client.Functions
         /// <param name="permission"></param>
         /// <param name="checkAnyway">Legacy Support useless now.</param>
         /// <returns></returns>
-        public static bool IsAllowed(vMenu.Shared.Enums.Permission permission,  bool checkAnyway = false)
+        public static bool IsAllowed(vMenu.Shared.Enums.Permission permission,  bool checkAnyway = false, bool useeverything = false)
         {
             var permStr = permission.ToString();
             bool allvalue = false;
@@ -175,7 +176,8 @@ namespace vMenu.Client.Functions
                     }
                 }
             }
-            return MenuEvents.Permissions[permission] || MenuEvents.Permissions[vMenu.Shared.Enums.Permission.Everything] || false || allvalue;
+            bool useEverything = useeverything ? MenuEvents.Permissions[vMenu.Shared.Enums.Permission.Everything] : false;
+            return MenuEvents.Permissions[permission] || useEverything || allvalue;
         }
         public static readonly int build = 2699;
         public static bool GameBuildCheck()

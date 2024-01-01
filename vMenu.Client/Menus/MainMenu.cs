@@ -24,16 +24,17 @@ using vMenu.Client.Events;
 using vMenu.Client.Settings;
 
 using vMenu.Shared.Enums;
-
 using static CitizenFX.Core.Native.API;
 using vMenu.Client.Objects;
+using System.Diagnostics.Eventing.Reader;
+
 
 namespace vMenu.Client.Menus
 {
     public class MainMenu
     {
         private static UIMenu mainMenu = null;
-
+        public bool isPlayerDead = false;
         public MainMenu()
         {
             var MenuLanguage = Languages.Menus["MainMenu"];
@@ -102,6 +103,51 @@ namespace vMenu.Client.Menus
             mainMenu.AddItem(hudOptions);
             mainMenu.AddItem(miscOptions);
             mainMenu.AddItem(aboutvMenu);
+
+            // updating the menu if the player is dead.
+
+            if (vMenu.Client.Settings.MenuSettings.LockMenuOnDeath == true && (vMenu.Client.Main.Instance.isPlayerDead == true))
+            {
+                playerRelatedOptions.SetLeftBadge(BadgeIcon.WARNING);
+                playerRelatedOptions.Description = "Player Related Options. ~r~Some Options in this menu have been disabled due to the player being dead.";
+
+            }
+
+            if (vMenu.Client.Settings.MenuSettings.LockMenuOnDeath == true && (vMenu.Client.Main.Instance.isPlayerDead == true))
+            {
+                bannedPlayers.SetRightBadge(BadgeIcon.LOCK);
+                bannedPlayers.Enabled = false;
+                bannedPlayers.SetRightLabel("");
+                bannedPlayers.Description = "Menu unavailable at this time due to the player being dead.";
+
+            }
+
+            if (vMenu.Client.Settings.MenuSettings.LockMenuOnDeath == true && (vMenu.Client.Main.Instance.isPlayerDead == true))
+            {
+                vehicleRelatedOptions.SetRightBadge(BadgeIcon.LOCK);
+                vehicleRelatedOptions.Enabled = false;
+                vehicleRelatedOptions.SetRightLabel("");
+                vehicleRelatedOptions.Description = "Menu unavailable at this time due to the player being dead.";
+
+            }
+
+            if (vMenu.Client.Settings.MenuSettings.LockMenuOnDeath == true && (vMenu.Client.Main.Instance.isPlayerDead == true))
+            {
+                worldRelatedOptions.SetRightBadge(BadgeIcon.LOCK);
+                worldRelatedOptions.Enabled = false;
+                worldRelatedOptions.SetRightLabel("");
+                worldRelatedOptions.Description = "Menu unavailable at this time due to the player being dead.";
+
+            }
+
+            if (vMenu.Client.Settings.MenuSettings.LockMenuOnDeath == true && (vMenu.Client.Main.Instance.isPlayerDead == true))
+            {
+                miscOptions.SetRightBadge(BadgeIcon.LOCK);
+                miscOptions.Enabled = false;
+                miscOptions.SetRightLabel("");
+                miscOptions.Description = "Menu unavailable at this time due to the player being dead.";
+
+            }
 
             onlinePlayers.Activated += (sender, i) =>
             {

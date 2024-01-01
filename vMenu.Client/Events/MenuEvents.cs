@@ -59,7 +59,8 @@ namespace vMenu.Client.Events
                     DestroyDui(Main.DuiObject);
                 }
             }
-        }
+        }        
+        
 
         private async void RestartMenu( )
         {
