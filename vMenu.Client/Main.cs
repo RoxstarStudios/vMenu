@@ -70,6 +70,8 @@ namespace vMenu.Client
 
             Instance = this;
 
+            _ = vMenu.Client.Exports.Vehicle.Instance;
+
             Init();
         }
 
@@ -95,7 +97,10 @@ namespace vMenu.Client
         }
 
         public bool isPlayerDead = false;
-
+        internal void Export(string val, Delegate obj)
+        {
+            Exports.Add(val, obj);
+        }
         [Tick]
         public async Task OnPlayerDeadCheckTick()
         {

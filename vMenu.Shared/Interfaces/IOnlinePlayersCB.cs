@@ -10,6 +10,6 @@ namespace vMenu.Shared.Interfaces
     {
         public string PlayerName = "";
         public int ServerId = 0;
-        public string[] Identifiers = [];
+        public string[] Identifiers = { };
     }
 }

@@ -102,7 +102,7 @@
     <Content Include="ResourceFiles\config\Default.jsonc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ResourceFiles\config\Permission.cfg">
+    <Content Include="ResourceFiles\config\Permissions.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ResourceFiles\config\Settings.cfg">
