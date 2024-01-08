@@ -44,12 +44,8 @@ namespace vMenu.Client.Exports
 
         public static List<double> GetGearRatios(int Vehicle)
         {
-            List<double> GearRatios = new();
             int NumGears = GetVehicleHighGear(Vehicle);
-            for (int i = 0; i <= NumGears; i++)
-            {
-                GearRatios.Insert(i, 0.0);
-            }
+            List<double> GearRatios = new List<double> ( new double[NumGears+1] );
 
             GearRatios[0] = 1.0 / ReverseGearRatio;
             GearRatios[NumGears] = FinalGearRatio;
