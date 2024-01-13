@@ -22,6 +22,7 @@ namespace vMenu.Client.Exports
             Main.Instance.Export("GetGearRatios", new Func<int, List<double>>(GetGearRatios));
             Main.Instance.Export("GetGearRatioByGear", new Func<int, int, double>(GetGearRatioByGear));
             Main.Instance.Export("GetGearDriveRatio", new Func<float, float, float, float>(GetGearDriveRatio));
+            Main.Instance.Export("GetGearRatiosCustom", new Func<int, double, double, double, double, List<double>>(GetGearRatiosCustom));
             Debug.WriteLine("Vehicle Exports Initialized");
         }
 
@@ -58,12 +59,41 @@ namespace vMenu.Client.Exports
             GearRatios[1] = 1.0 / FirstGearRatio;
 
             if(NumGears==2)
+            {
                 return GearRatios;
+            }
 
             double baseRatio = Math.Pow((1.0 / (Math.Pow(ProgressionFactor, 0.5 * (NumGears - 1.0) * (NumGears - 2.0)))) * GearRatios[1], 1.0 / (NumGears - 1));
             for (int i = 2; i <= NumGears; i++)
             {
                 GearRatios[i] = GearRatios[NumGears] * Math.Pow(baseRatio, (double)NumGears - i) * Math.Pow(ProgressionFactor, 0.5 * (NumGears - i) * (NumGears - i - 1.0));
+            }
+            return GearRatios;
+        }
+        public static List<double> GetGearRatiosCustom(int Gears, double FirstGearRatioF, double ReverseGearRatioF, double FinalGearRatioF, double ProgressionFactorF)
+        {
+            int NumGears = Gears;
+            List<double> GearRatios = new List<double> ( new double[NumGears+1] );
+
+            GearRatios[0] = 1.0 / ReverseGearRatioF;
+            GearRatios[NumGears] = FinalGearRatioF;
+
+            if(NumGears==1)
+            {
+                return GearRatios;
+            }
+
+            GearRatios[1] = 1.0 / FirstGearRatioF;
+
+            if(NumGears==2)
+            {
+                return GearRatios;
+            }
+
+            double baseRatio = Math.Pow((1.0 / (Math.Pow(ProgressionFactorF, 0.5 * (NumGears - 1.0) * (NumGears - 2.0)))) * GearRatios[1], 1.0 / (NumGears - 1));
+            for (int i = 2; i <= NumGears; i++)
+            {
+                GearRatios[i] = GearRatios[NumGears] * Math.Pow(baseRatio, (double)NumGears - i) * Math.Pow(ProgressionFactorF, 0.5 * (NumGears - i) * (NumGears - i - 1.0));
             }
             return GearRatios;
         }
