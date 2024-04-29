@@ -10,7 +10,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Build\Client\</OutputPath>
+    <OutputPath>..\vMenu.Build\Build\Client\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -30,10 +30,14 @@
     </Reference>
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy /E /Y "$(SolutionDir)Build\Client\net452\" "$(SolutionDir)Build\[Resource]\vMenu\Client"
-del "$(SolutionDir)Build\[Resource]\vMenu\Client\CitizenFX.*.*"
-
-del "$(SolutionDir)Build\[Resource]\vMenu\Client\Microsoft.*.*"
-del "$(SolutionDir)Build\[Resource]\vMenu\Client\MsgPack.dll"</PostBuildEvent>
+    <PostBuildEvent>
+      if not exist "$(SolutionDir)vMenu.Build\vMenu\" mkdir "$(SolutionDir)vMenu.Build\vMenu\"
+      if not exist "$(SolutionDir)vMenu.Build\vMenu\Client\" mkdir "$(SolutionDir)vMenu.Build\vMenu\Client\"
+      xcopy /E /Y "$(SolutionDir)vMenu.Build\Build\Client\net452\" "$(SolutionDir)vMenu.Build\vMenu\Client\"
+      del "$(SolutionDir)vMenu.Build\vMenu\Client\CitizenFX.*.*"
+      del "$(SolutionDir)vMenu.Build\vMenu\Client\Microsoft.*.*"
+      del "$(SolutionDir)vMenu.Build\vMenu\Client\MsgPack.dll"
+      del "$(SolutionDir)vMenu.Build\vMenu\Client\*.pdb"
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -8,7 +8,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>..\Build\Server\</OutputPath>
+    <OutputPath>..\vMenu.Build\Build\Server\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="ResourceFiles\languages\de.json" />
@@ -125,22 +125,16 @@
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>
-      xcopy /E /Y "$(SolutionDir)Build\Server\netstandard2.0\" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-      xcopy /E /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\" "$(SolutionDir)Build\[Resource]\vMenu"
-      del "$(SolutionDir)Build\[Resource]\vMenu\Server\CitizenFX.*.*"
-
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\System.Threading.Tasks.Extensions.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      del "$(SolutionDir)Build\[Resource]\vMenu\Server\System.*.*"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\System.Threading.Tasks.Extensions.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.Bcl.AsyncInterfaces.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.Extensions.Logging.Abstractions.dll" "$(SolutionDir)Build\[Resource]\vMenu"
-      del "$(SolutionDir)Build\[Resource]\vMenu\Server\Microsoft.*.*"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Microsoft.Extensions.Logging.Abstractions.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-      move /Y "$(SolutionDir)Build\[Resource]\vMenu\Microsoft.Bcl.AsyncInterfaces.dll" "$(SolutionDir)Build\[Resource]\vMenu\Server"
-
-      del "$(SolutionDir)Build\[Resource]\vMenu\Server\MsgPack.dll"
-      RD /S /Q "$(SolutionDir)Build\[Resource]\vMenu\Server\ResourceFiles\"</PostBuildEvent>
+      if not exist "$(SolutionDir)vMenu.Build\vMenu\" mkdir "$(SolutionDir)vMenu.Build\vMenu\"
+      if not exist "$(SolutionDir)vMenu.Build\vMenu\Server\" mkdir "$(SolutionDir)vMenu.Build\vMenu\Server\"
+      xcopy /E /Y "$(SolutionDir)vMenu.Build\Build\Server\netstandard2.0\" "$(SolutionDir)vMenu.Build\vMenu\Server\"
+      del "$(SolutionDir)vMenu.Build\vMenu\Server\CitizenFX.*.*"
+      del "$(SolutionDir)vMenu.Build\vMenu\Server\Microsoft.*.*"
+      del "$(SolutionDir)vMenu.Build\vMenu\Server\MsgPack.dll"
+      del "$(SolutionDir)vMenu.Build\vMenu\Server\*.pdb"
+      xcopy /E /Y "$(SolutionDir)vMenu.Build\vMenu\Server\ResourceFiles\" "$(SolutionDir)vMenu.Build\vMenu\"
+      RD /S /Q "$(SolutionDir)vMenu.Build\vMenu\Server\ResourceFiles\"
+      </PostBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
 </Project>
